@@ -2,9 +2,9 @@
   "name": "my-express-x",
   "version": "1.0.0",
   "description": "Learning nodejs",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node build/app.js",
+    "start": "node build/app/app.js",
     "test": "test",
     "tsc": "tsc"
   },

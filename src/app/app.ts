@@ -1,6 +1,8 @@
 import express from 'express';
 import { connection } from './database';
 
+connection.connect();
+// connection.end();
 const app: express.Application = express();
 const port = 3001;
 
@@ -14,7 +16,6 @@ app.all('/secret', function (req, res, next) {
 });
 
 app.get('/', (req: any, res: any) => {
-  testConnection();
   return res.send('Hello World!');
 });
 
@@ -30,16 +31,15 @@ app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user')
 });
 
-function testConnection() {
-  connection.connect();
+app.get('/users', (req: any, res: any) => {
   connection.query('SELECT name FROM user', function (err, rows, fields) {
     if (err) {
-      throw err;
+      return res.send(err);
     }
-    console.log('rows', rows.map((r: User) => r.name).join(', '));
+    const users = rows.map((user: User) => user.name);
+    return res.send(users);
   });
-  connection.end();
-}
+});
 
 interface User {
   name: string;
